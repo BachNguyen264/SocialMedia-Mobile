@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/white"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_70sdp"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_32sdp"
+        android:textColor="@color/blue"/>
+
+    <EditText
+        android:id="@+id/email"
+        style="@style/edit_text"
+        android:hint="Email"
+        android:layout_marginTop="@dimen/_90sdp"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:id="@+id/password"
+        style="@style/edit_text"
+        android:hint="Password"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="@dimen/_195sdp"
+        android:layout_height="wrap_content"
+        style="@style/button"
+        android:text="Login"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/create_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don't have an account? Create new one"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@color/black"/>
+
+</LinearLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".UserComments">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Comments"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_18sdp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginVertical="@dimen/_11sdp"/>
+
+    <View
+        style="@style/seperator"
+        android:layout_height="@dimen/_10sdp"/>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/wild_sand"
+        android:listSelector="@color/transparent"
+        android:dividerHeight="@dimen/_10sdp"/>
+
+</LinearLayout>

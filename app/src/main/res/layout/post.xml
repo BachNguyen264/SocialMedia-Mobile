@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_15sdp">
+
+    <TextView
+        android:id="@+id/post_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@color/scorpion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/post_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/segoe"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/scorpion"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/post_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/segoe"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:textColor="@color/scorpion"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/post_author"/>
+
+    <ImageView
+        android:id="@+id/post_like"
+        android:layout_width="@dimen/_17sdp"
+        android:layout_height="@dimen/_17sdp"
+        android:layout_below="@+id/post_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:id="@+id/post_likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginLeft="@dimen/_9sdp"
+        android:textColor="@color/dusty_gray"
+        android:layout_below="@+id/post_content"
+        android:layout_toRightOf="@+id/post_like"/>
+
+    <TextView
+        android:id="@+id/post_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginRight="@dimen/_9sdp"
+        android:textColor="@color/dusty_gray"
+        android:layout_below="@+id/post_content"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

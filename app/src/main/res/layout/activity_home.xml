@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_11sdp"
+        android:layout_marginTop="@dimen/_11sdp">
+
+        <TextView
+            android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textStyle="bold"
+            android:fontFamily="@font/segoebold"
+            android:textSize="@dimen/_18sdp"
+            android:textColor="@color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/modify"/>
+
+        <ImageView
+            android:id="@+id/modify"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:scaleType="centerInside"
+            android:src="@drawable/modify"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/post_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:hint="Share your thoughts..."
+            android:layout_marginHorizontal="@dimen/_22sdp"
+            android:layout_marginVertical="@dimen/_6sdp"
+            android:textSize="@dimen/_16sdp"
+            android:fontFamily="@font/segoe"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/black"
+            android:layout_below="@+id/home"/>
+
+        <Button
+            android:id="@+id/post"
+            style="@style/button"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/post_edittext"
+            android:layout_alignParentRight="true"
+            android:text="Post"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginHorizontal="@dimen/_11sdp"
+            android:padding="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_7sdp"/>
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:visibility="gone"/>
+
+    <View style="@style/seperator"/>
+
+    <ListView
+        android:id="@+id/posts_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/wild_sand"
+        android:listSelector="@color/transparent"
+        android:dividerHeight="@dimen/_5sdp"/>
+
+</LinearLayout>

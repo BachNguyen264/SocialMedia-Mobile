@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/_15sdp">
+
+    <TextView
+        android:id="@+id/comment_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@color/scorpion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/comment_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/segoe"
+        android:textSize="@dimen/_15sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:textColor="@color/scorpion"
+        android:layout_below="@+id/comment_author"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:id="@+id/comment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/segoe"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/scorpion"
+        android:layout_below="@+id/comment_content"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".CommentsActivity">
+
+    <!--    Here we added all post.xml layout-->
+    <!-- (RelativeLayout and all its components -->
+    <include layout="@layout/post"/>
+
+    <View style="@style/seperator"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_11sdp">
+
+        <Button
+            android:id="@+id/post"
+            style="@style/button"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_11sdp"
+            android:padding="@dimen/_5sdp"
+            android:text="Post"
+            android:textSize="@dimen/_14sdp"/>
+
+        <EditText
+            android:id="@+id/comment_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:hint="Type a comment"
+            android:textSize="@dimen/_16sdp"
+            android:fontFamily="@font/segoe"
+            android:textColorHint="@color/gray"
+            android:textColor="@color/black"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/post"/>
+
+    </RelativeLayout>
+
+    <View style="@style/seperator"/>
+
+    <ListView
+        android:id="@+id/comments_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/wild_sand"
+        android:listSelector="@color/transparent"
+        android:dividerHeight="@dimen/_5sdp"/>
+
+</LinearLayout>

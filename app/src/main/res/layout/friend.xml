@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/_15sdp"
+    android:paddingVertical="@dimen/_5sdp">
+
+    <Button
+        android:id="@+id/follow"
+        style="@style/button"
+        android:layout_width="@dimen/_85sdp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/_5sdp"
+        android:text="Follow"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/unfollow"
+        android:layout_width="@dimen/_85sdp"
+        android:layout_height="wrap_content"
+        android:text="Unfollow"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/blue"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/_9sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:fontFamily="@font/segoebold"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@color/black"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>
