@@ -6,7 +6,11 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import api.ApiClient;
+import models.ApiResponse;
 import models.auth.AuthResponse;
 import models.auth.LoginRequest;
 import models.auth.RegisterRequest;
@@ -20,64 +24,29 @@ public class AuthRepository {
     private static final String TAG = "AuthRepository";
     private final Context context;
     private final TokenManager tokenManager;
+    private final Gson gson;
 
     public AuthRepository(Context context) {
         this.context = context;
         this.tokenManager = TokenManager.getInstance(context);
+        this.gson = new Gson();
     }
 
     public LiveData<AuthResult> login(String email, String password) {
         MutableLiveData<AuthResult> result = new MutableLiveData<>();
 
         LoginRequest loginRequest = new LoginRequest(email, password);
-        ApiClient.getClient(context).login(loginRequest).enqueue(new Callback<AuthResponse>() {
+
+        // CHÚ Ý: Callback bây giờ trả về ApiResponse<AuthResponse> thay vì AuthResponse trực tiếp
+        ApiClient.getClient(context).login(loginRequest).enqueue(new Callback<ApiResponse<AuthResponse>>() {
             @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    AuthResponse authResponse = response.body();
-                    if (authResponse.isSuccess()) {
-                        // Save token and user info
-                        tokenManager.saveToken(authResponse.getToken());
-                        if (authResponse.getUser() != null) {
-                            tokenManager.saveUserInfo(
-                                    authResponse.getUser().getId(),
-                                    authResponse.getUser().getEmail()
-                            );
-                        }
-                        result.setValue(new AuthResult(true, authResponse.getMessage(), authResponse.getUser()));
-                        Log.d(TAG, "Login successful");
-                    } else {
-                        result.setValue(new AuthResult(false, authResponse.getMessage(), null));
-                        Log.w(TAG, "Login failed: " + authResponse.getMessage());
-                    }
-                } else {
-                    String errorMessage = "Login failed. Please check your credentials.";
-                    try {
-                        if (response.errorBody() != null) {
-                            String errorBody = response.errorBody().string();
-                            // Try to parse error message from response
-                            errorMessage = extractErrorMessage(errorBody);
-                        }
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error parsing error response", e);
-                    }
-                    result.setValue(new AuthResult(false, errorMessage, null));
-                    Log.e(TAG, "Login API error: " + response.code() + " - " + errorMessage);
-                }
+            public void onResponse(Call<ApiResponse<AuthResponse>> call, Response<ApiResponse<AuthResponse>> response) {
+                handleAuthResponse(response, result, "Login");
             }
 
             @Override
-            public void onFailure(Call<AuthResponse> call, Throwable t) {
-                String errorMessage = "Network error. Please check your connection.";
-                if (t.getMessage() != null) {
-                    if (t.getMessage().contains("timeout")) {
-                        errorMessage = "Connection timeout. Please try again.";
-                    } else if (t.getMessage().contains("UnknownHost")) {
-                        errorMessage = "Server not reachable. Please check your internet connection.";
-                    }
-                }
-                result.setValue(new AuthResult(false, errorMessage, null));
-                Log.e(TAG, "Login network failure", t);
+            public void onFailure(Call<ApiResponse<AuthResponse>> call, Throwable t) {
+                handleNetworkFailure(t, result, "Login");
             }
         });
 
@@ -88,61 +57,91 @@ public class AuthRepository {
         MutableLiveData<AuthResult> result = new MutableLiveData<>();
 
         RegisterRequest registerRequest = new RegisterRequest(firstName, lastName, email, password);
-        ApiClient.getClient(context).register(registerRequest).enqueue(new Callback<AuthResponse>() {
+
+        // CHÚ Ý: Callback bây giờ trả về ApiResponse<AuthResponse>
+        ApiClient.getClient(context).register(registerRequest).enqueue(new Callback<ApiResponse<AuthResponse>>() {
             @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    AuthResponse authResponse = response.body();
-                    if (authResponse.isSuccess()) {
-                        // Save token and user info for auto-login after registration
-                        tokenManager.saveToken(authResponse.getToken());
-                        if (authResponse.getUser() != null) {
-                            Log.d(TAG, "Saving User ID: " + authResponse.getUser().getId()); // Kiểm tra xem ID có > -1 không
-                            tokenManager.saveUserInfo(
-                                    authResponse.getUser().getId(),
-                                    authResponse.getUser().getEmail()
-                            );
-                        } else {
-                            Log.e(TAG, "User object is NULL in response!");
-                        }
-                        result.setValue(new AuthResult(true, authResponse.getMessage(), authResponse.getUser()));
-                        Log.d(TAG, "Registration successful");
-                    } else {
-                        result.setValue(new AuthResult(false, authResponse.getMessage(), null));
-                        Log.w(TAG, "Registration failed: " + authResponse.getMessage());
-                    }
-                } else {
-                    String errorMessage = "Registration failed. Please try again.";
-                    try {
-                        if (response.errorBody() != null) {
-                            String errorBody = response.errorBody().string();
-                            // Try to parse error message from response
-                            errorMessage = extractErrorMessage(errorBody);
-                        }
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error parsing error response", e);
-                    }
-                    result.setValue(new AuthResult(false, errorMessage, null));
-                    Log.e(TAG, "Registration API error: " + response.code() + " - " + errorMessage);
-                }
+            public void onResponse(Call<ApiResponse<AuthResponse>> call, Response<ApiResponse<AuthResponse>> response) {
+                handleAuthResponse(response, result, "Registration");
             }
 
             @Override
-            public void onFailure(Call<AuthResponse> call, Throwable t) {
-                String errorMessage = "Network error. Please check your connection.";
-                if (t.getMessage() != null) {
-                    if (t.getMessage().contains("timeout")) {
-                        errorMessage = "Connection timeout. Please try again.";
-                    } else if (t.getMessage().contains("UnknownHost")) {
-                        errorMessage = "Server not reachable. Please check your internet connection.";
-                    }
-                }
-                result.setValue(new AuthResult(false, errorMessage, null));
-                Log.e(TAG, "Registration network failure", t);
+            public void onFailure(Call<ApiResponse<AuthResponse>> call, Throwable t) {
+                handleNetworkFailure(t, result, "Registration");
             }
         });
 
         return result;
+    }
+
+    // Hàm xử lý chung cho cả Login và Register để tránh lặp code
+    private void handleAuthResponse(Response<ApiResponse<AuthResponse>> response, MutableLiveData<AuthResult> result, String action) {
+        if (response.isSuccessful() && response.body() != null) {
+            ApiResponse<AuthResponse> apiResponse = response.body();
+
+            // Kiểm tra field "success": true từ backend
+            if (apiResponse.isSuccess() && apiResponse.getData() != null) {
+                AuthResponse authData = apiResponse.getData();
+
+                // Lưu token
+                tokenManager.saveToken(authData.getToken());
+
+                // Lưu thông tin user
+                if (authData.getUser() != null) {
+                    tokenManager.saveUserInfo(
+                            authData.getUser().getId(),
+                            authData.getUser().getEmail()
+                    );
+                }
+
+                result.setValue(new AuthResult(true, "Success", authData.getUser()));
+                Log.d(TAG, action + " successful");
+            } else {
+                // Backend trả về 200 OK nhưng success: false
+                String msg = apiResponse.getError() != null ? apiResponse.getError() : "Unknown error";
+                result.setValue(new AuthResult(false, msg, null));
+                Log.w(TAG, action + " failed: " + msg);
+            }
+        } else {
+            // Xử lý lỗi 4xx, 5xx
+            String errorMessage = action + " failed. Please check your credentials.";
+            try {
+                if (response.errorBody() != null) {
+                    String errorBodyString = response.errorBody().string();
+                    // Parse error body theo format chuẩn của backend
+                    ApiResponse<AuthResponse> errorResponse = parseErrorBody(errorBodyString);
+                    if (errorResponse != null && errorResponse.getError() != null) {
+                        errorMessage = errorResponse.getError();
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error parsing error response", e);
+            }
+            result.setValue(new AuthResult(false, errorMessage, null));
+            Log.e(TAG, action + " API error: " + response.code() + " - " + errorMessage);
+        }
+    }
+
+    private void handleNetworkFailure(Throwable t, MutableLiveData<AuthResult> result, String action) {
+        String errorMessage = "Network error. Please check your connection.";
+        if (t.getMessage() != null) {
+            if (t.getMessage().contains("timeout")) {
+                errorMessage = "Connection timeout. Please try again.";
+            } else if (t.getMessage().contains("UnknownHost")) {
+                errorMessage = "Server not reachable. Please check your internet connection.";
+            }
+        }
+        result.setValue(new AuthResult(false, errorMessage, null));
+        Log.e(TAG, action + " network failure", t);
+    }
+
+    private ApiResponse<AuthResponse> parseErrorBody(String errorBody) {
+        try {
+            Type type = new TypeToken<ApiResponse<AuthResponse>>() {}.getType();
+            return gson.fromJson(errorBody, type);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void logout() {
@@ -154,24 +153,6 @@ public class AuthRepository {
         return tokenManager.isLoggedIn();
     }
 
-    private String extractErrorMessage(String errorBody) {
-        try {
-            // Try to extract error message from JSON response
-            com.google.gson.Gson gson = new com.google.gson.Gson();
-            java.util.Map<String, Object> errorMap = gson.fromJson(errorBody, java.util.Map.class);
-            if (errorMap.containsKey("message")) {
-                return (String) errorMap.get("message");
-            } else if (errorMap.containsKey("error")) {
-                return (String) errorMap.get("error");
-            }
-        } catch (Exception e) {
-            // If parsing fails, return a generic error message
-            Log.e(TAG, "Failed to parse error message", e);
-        }
-        return "An error occurred. Please try again.";
-    }
-
-    // Result wrapper for authentication operations
     public static class AuthResult {
         private final boolean success;
         private final String message;

@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView createAccountText;
     private ProgressBar progressBar;
     private AuthRepository authRepository;
-    private TokenManager tokenManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialize repository and token manager
         authRepository = new AuthRepository(this);
-        tokenManager = TokenManager.getInstance(this);
 
         // Check if user is already logged in
         if (authRepository.isLoggedIn()) {

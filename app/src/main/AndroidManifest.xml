@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,31 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".FriendsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UserLikes"
-            android:exported="false" />
-        <activity
-            android:name=".UserComments"
-            android:exported="false" />
-        <activity
-            android:name=".UserPosts"
-            android:exported="false" />
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CommentsActivity"
-            android:exported="false" />
-        <activity
             android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChangePassword"
-            android:exported="false" />
-        <activity
-            android:name=".ModifyProfile"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -53,17 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver
-            android:name=".PostWidget"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/post_widget_info" />
-        </receiver>
 
     </application>
 

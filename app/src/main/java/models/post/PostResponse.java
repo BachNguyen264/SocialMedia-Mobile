@@ -32,8 +32,6 @@ public class PostResponse {
     @SerializedName("isLiked")
     private boolean isLiked;
 
-    public PostResponse() {}
-
     public PostResponse(int id, String content, int userId, UserResponse user, String createdAt, String updatedAt) {
         this.id = id;
         this.content = content;
@@ -46,108 +44,4 @@ public class PostResponse {
         this.isLiked = false;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public UserResponse getUser() {
-        return user;
-    }
-
-    public void setUser(UserResponse user) {
-        this.user = user;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public int getLikesCount() {
-        return likesCount;
-    }
-
-    public void setLikesCount(int likesCount) {
-        this.likesCount = likesCount;
-    }
-
-    public int getCommentsCount() {
-        return commentsCount;
-    }
-
-    public void setCommentsCount(int commentsCount) {
-        this.commentsCount = commentsCount;
-    }
-
-    public boolean isLiked() {
-        return isLiked;
-    }
-
-    public void setLiked(boolean liked) {
-        isLiked = liked;
-    }
-
-    public String getFormattedDate() {
-        if (createdAt == null) return "";
-
-        try {
-            // Parse ISO 8601 format and format for display
-            java.time.format.DateTimeFormatter inputFormatter =
-                    java.time.format.DateTimeFormatter.ISO_DATE_TIME;
-            java.time.format.DateTimeFormatter outputFormatter =
-                    java.time.format.DateTimeFormatter.ofPattern("MMM dd, yyyy 'at' hh:mm a");
-
-            java.time.LocalDateTime dateTime = java.time.LocalDateTime.parse(createdAt, inputFormatter);
-            return dateTime.format(outputFormatter);
-        } catch (Exception e) {
-            // Fallback to simple string manipulation if parsing fails
-            return createdAt.substring(0, Math.min(createdAt.length(), 16));
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "PostResponse{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", userId=" + userId +
-                ", user=" + user +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", likesCount=" + likesCount +
-                ", commentsCount=" + commentsCount +
-                ", isLiked=" + isLiked +
-                '}';
-    }
 }
