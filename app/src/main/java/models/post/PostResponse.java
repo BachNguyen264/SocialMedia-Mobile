@@ -1,7 +1,6 @@
 package models.post;
 
 import com.google.gson.annotations.SerializedName;
-
 import models.user.UserResponse;
 
 public class PostResponse {
@@ -11,37 +10,27 @@ public class PostResponse {
     @SerializedName("content")
     private String content;
 
-    @SerializedName("userId")
-    private int userId;
+    @SerializedName("createdAt")
+    private String createdAt;
+
+    @SerializedName("commentCount")
+    private int commentCount;
+
+    @SerializedName("likeCount")
+    private int likeCount;
+
+    @SerializedName("userHasLiked")
+    private Boolean userHasLiked;
 
     @SerializedName("user")
     private UserResponse user;
 
-    @SerializedName("createdAt")
-    private String createdAt;
-
-    @SerializedName("updatedAt")
-    private String updatedAt;
-
-    @SerializedName("likesCount")
-    private int likesCount;
-
-    @SerializedName("commentsCount")
-    private int commentsCount;
-
-    @SerializedName("isLiked")
-    private boolean isLiked;
-
-    public PostResponse(int id, String content, int userId, UserResponse user, String createdAt, String updatedAt) {
-        this.id = id;
-        this.content = content;
-        this.userId = userId;
-        this.user = user;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.likesCount = 0;
-        this.commentsCount = 0;
-        this.isLiked = false;
-    }
-
+    // Getters
+    public int getId() { return id; }
+    public String getContent() { return content; }
+    public String getCreatedAt() { return createdAt; }
+    public int getCommentCount() { return commentCount; }
+    public int getLikeCount() { return likeCount; }
+    public boolean isUserHasLiked() { return userHasLiked; }
+    public UserResponse getUser() { return user; }
 }

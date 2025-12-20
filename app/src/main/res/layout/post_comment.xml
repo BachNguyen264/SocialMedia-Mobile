@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <include layout="@layout/post"/>
+    <include layout="@layout/item_post"/>
 
     <View style="@style/seperator"/>
 

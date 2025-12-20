@@ -10,7 +10,7 @@
 
     <!--    Here we added all post.xml layout-->
     <!-- (RelativeLayout and all its components -->
-    <include layout="@layout/post"/>
+    <include layout="@layout/item_post"/>
 
     <View style="@style/seperator"/>
 
