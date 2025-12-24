@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -137,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
                 setLoading(false);
 
                 if (authResult.isSuccess()) {
+                    SharedPreferences prefs = getSharedPreferences("Username", MODE_PRIVATE);
+                    prefs.edit()
+                            .putString("display_name",
+                                    authResult.getUser().getFirstName() + " " + authResult.getUser().getLastName())
+                            .apply();
                     Toast.makeText(MainActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
                     navigateToHome();
                 } else {

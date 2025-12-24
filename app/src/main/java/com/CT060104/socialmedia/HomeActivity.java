@@ -80,7 +80,6 @@ public class HomeActivity extends AppCompatActivity {
                 postAdapter.setPosts(result.getPosts());
             } else {
                 Log.e("Home Activity", "Error loading timeline: " + result.getMessage());
-                Log.e("Home Activity", "Result:"+ result);
                 Toast.makeText(this, "Error: " + result.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -98,5 +97,10 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(this, "Failed to create post", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    protected void onResume() {
+        super.onResume();
+        loadTimeline();
     }
 }

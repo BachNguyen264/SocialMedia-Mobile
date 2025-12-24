@@ -7,6 +7,8 @@ import models.auth.LoginRequest;
 import models.post.CreatePostRequest;
 import models.post.PostResponse;
 import models.auth.RegisterRequest;
+import models.user.UpdateUserRequest;
+import models.user.UserResponse;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -28,4 +30,10 @@ public interface SocialMediaApi {
 
     @POST("/api/posts")
     Call<ApiResponse<PostResponse>> createPost(@Body CreatePostRequest request);
+
+    //-------------- USER ----------
+    @GET("/api/users/me")
+    Call<ApiResponse<UserResponse>> getProfile();
+    @PATCH("/api/users/me")
+    Call<ApiResponse<UserResponse>> updateProfile(@Body UpdateUserRequest request);
 }
