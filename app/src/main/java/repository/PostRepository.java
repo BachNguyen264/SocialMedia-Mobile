@@ -6,17 +6,14 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.List;
 
 import api.ApiClient;
 import models.ApiResponse;
-import models.TimelineData;
+import models.post.TimelineData;
 import models.post.CreatePostRequest;
 import models.post.PostResponse;
+import models.user.GetMyPostResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,11 +21,9 @@ import retrofit2.Response;
 public class PostRepository {
     private static final String TAG = "PostRepository";
     private final Context context;
-    private final Gson gson;
 
     public PostRepository(Context context) {
         this.context = context;
-        this.gson = new Gson();
     }
 
     public LiveData<PostResult> getTimeline(int page, int limit) {
@@ -83,6 +78,55 @@ public class PostRepository {
         return result;
     }
 
+    public LiveData<PostResponse> getPostById(int postId) {
+        MutableLiveData<PostResponse> result = new MutableLiveData<>();
+        ApiClient.getClient(context).getPostById(postId).enqueue(new Callback<ApiResponse<PostResponse>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<PostResponse>> call, Response<ApiResponse<PostResponse>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<PostResponse> apiResponse = response.body();
+                    if (apiResponse.isSuccess() && apiResponse.getData() != null) {
+                        result.setValue(apiResponse.getData());
+                        return;
+                    }
+                }
+                result.setValue(null);
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<PostResponse>> call, Throwable t) {
+                result.setValue(null);
+            }
+        });
+        return result;
+    }
+
+    public LiveData<PostResult> getMyPosts(int page, int limit) {
+        MutableLiveData<PostResult> result = new MutableLiveData<>();
+        ApiClient.getClient(context).getMyPosts(page, limit).enqueue(new Callback<ApiResponse<GetMyPostResponse>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<GetMyPostResponse>> call, Response<ApiResponse<GetMyPostResponse>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ApiResponse<GetMyPostResponse> apiResponse = response.body();
+                    if (apiResponse.isSuccess() && apiResponse.getData() != null) {
+                        result.setValue(new PostResult(true, "Success", apiResponse.getData().getPosts()));
+                    } else {
+                        result.setValue(new PostResult(false, apiResponse.getError(), null));
+                    }
+                }else{
+                    result.setValue(new PostResult(false, "Failed to load posts", null));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<GetMyPostResponse>> call, Throwable t) {
+                result.setValue(new PostResult(false, t.getMessage(), null));
+                Log.e(TAG, "Get my posts network error", t);
+            }
+        });
+
+        return result;
+    }
     public static class PostResult {
         private final boolean success;
         private final String message;

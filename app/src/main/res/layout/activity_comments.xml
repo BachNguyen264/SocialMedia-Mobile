@@ -8,7 +8,7 @@
     android:background="@color/white"
     tools:context=".CommentsActivity">
 
-    <!--    Here we added all post.xml layout-->
+    <!--    Here we added all item_post.xml layout-->
     <!-- (RelativeLayout and all its components -->
     <include layout="@layout/item_post"/>
 
@@ -49,12 +49,12 @@
 
     <View style="@style/seperator"/>
 
-    <ListView
-        android:id="@+id/comments_list"
+    <!-- Posts List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_comments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/wild_sand"
-        android:listSelector="@color/transparent"
-        android:dividerHeight="@dimen/_5sdp"/>
+        android:padding="4dp"
+        android:clipToPadding="false"/>
 
 </LinearLayout>

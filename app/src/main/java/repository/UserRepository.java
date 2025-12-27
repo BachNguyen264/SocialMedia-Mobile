@@ -6,8 +6,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.gson.Gson;
-
 import api.ApiClient;
 import models.ApiResponse;
 

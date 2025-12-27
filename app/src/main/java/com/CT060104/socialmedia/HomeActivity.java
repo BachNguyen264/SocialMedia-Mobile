@@ -1,14 +1,12 @@
 package com.CT060104.socialmedia;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,7 +14,7 @@ import android.widget.Toast;
 
 import adapters.PostAdapter;
 import repository.PostRepository;
-import utils.TokenManager;
+import repository.AuthRepository;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -31,9 +29,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        AuthRepository authRepository = new AuthRepository(this);
         // Kiểm tra login
-        if (!TokenManager.getInstance(this).isLoggedIn()) {
+        if (!authRepository.isLoggedIn()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
@@ -92,7 +90,6 @@ public class HomeActivity extends AppCompatActivity {
             if (success) {
                 Toast.makeText(this, "Post created successfully!", Toast.LENGTH_SHORT).show();
                 editPostContent.setText(""); // Xóa nội dung cũ
-                loadTimeline(); // Tải lại danh sách để thấy bài mới
             } else {
                 Toast.makeText(this, "Failed to create post", Toast.LENGTH_SHORT).show();
             }

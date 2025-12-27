@@ -3,7 +3,9 @@ package adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.post.PostResponse;
+import repository.LikeRepository;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
@@ -48,6 +51,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private final TextView dateText;
         private final TextView likesText;
         private final TextView commentsText;
+        private ImageButton likeButton;
+        private LikeRepository likeRepository;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +61,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             dateText = itemView.findViewById(R.id.text_date);
             likesText = itemView.findViewById(R.id.text_likes);
             commentsText = itemView.findViewById(R.id.text_comments);
+            likeButton = itemView.findViewById(R.id.post_like);
+            likeRepository = new LikeRepository(itemView.getContext());
         }
 
         public void bind(PostResponse post) {
@@ -69,6 +76,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             // Xử lý ngày tháng đơn giản (có thể cải thiện bằng DateFormatter)
             dateText.setText(post.getCreatedAt().split("T")[0]);
+            if(post.isUserHasLiked()){
+                likeButton.setImageResource(R.drawable.liked);
+            }
+            else{
+                likeButton.setImageResource(R.drawable.like);
+            }
 
             likesText.setText(post.getLikeCount() + " Likes");
             commentsText.setText(post.getCommentCount() + " Comments");
