@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.CT060104.socialmediaclient"
-        minSdk 26
+        minSdk 28
         targetSdk 35
         versionCode 1
         versionName "1.0"
@@ -18,7 +18,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

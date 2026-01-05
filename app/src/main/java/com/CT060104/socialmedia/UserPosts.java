@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import adapters.PostAdapter;
-import repository.PostRepository;
+import com.CT060104.socialmedia.adapters.PostAdapter;
+import com.CT060104.socialmedia.repository.PostRepository;
 
 public class UserPosts extends AppCompatActivity {
 

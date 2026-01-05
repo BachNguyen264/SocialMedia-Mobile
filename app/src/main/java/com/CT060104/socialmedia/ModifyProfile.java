@@ -7,13 +7,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import repository.UserRepository;
+import com.CT060104.socialmedia.repository.UserRepository;
 
 public class ModifyProfile extends AppCompatActivity {
 

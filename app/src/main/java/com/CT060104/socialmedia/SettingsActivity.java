@@ -3,7 +3,7 @@ package com.CT060104.socialmedia;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import repository.AuthRepository;
+import com.CT060104.socialmedia.repository.AuthRepository;
 import android.content.Intent;
 import android.widget.LinearLayout;
 import android.widget.TextView;

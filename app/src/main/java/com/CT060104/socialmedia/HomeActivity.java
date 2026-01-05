@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import adapters.PostAdapter;
-import repository.PostRepository;
-import repository.AuthRepository;
+import com.CT060104.socialmedia.adapters.PostAdapter;
+import com.CT060104.socialmedia.repository.PostRepository;
+import com.CT060104.socialmedia.repository.AuthRepository;
 
 public class HomeActivity extends AppCompatActivity {
 

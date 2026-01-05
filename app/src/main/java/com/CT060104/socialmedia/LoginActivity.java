@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ProgressBar;
 
-import repository.AuthRepository;
+import com.CT060104.socialmedia.repository.AuthRepository;
 
 public class LoginActivity extends AppCompatActivity {
 
